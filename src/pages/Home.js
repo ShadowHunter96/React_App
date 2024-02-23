@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import FilterComponent from "../components/FilterComponent";
+import JobList from "./JobList";
 
 export default function Home() {
   const [users, setUsers] = useState([])
@@ -27,6 +29,8 @@ export default function Home() {
   return (
     <div className="container">
       <div className="py-4">
+        <FilterComponent/>
+        <JobList/>
         <table className="table border shadow">
           <thead>
             <tr>
