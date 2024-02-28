@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AddUser from './users/AddUser.js';
 import EditUser from './users/EditUser.js';
 import ViewUser from './users/ViewUser.js';
+import AddTechJob from './jobs/AddTechJob.js';
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route exact path="/adduser" element={<AddUser/>}></Route>
         <Route exact path="/edituser/:id" element={<EditUser/>}></Route>
         <Route exact path="/viewuser/:id" element={<ViewUser/>}></Route>
+        <Route exact path="/addtechjob" element={<AddTechJob/>}></Route>
       </Routes>
 
 
