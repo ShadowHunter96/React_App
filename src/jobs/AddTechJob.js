@@ -32,8 +32,25 @@ const AddTechJob = () => {
             return;
         }
 
-        await axios.post('http://localhost:8081/techJob', techJob);
-        navigate('/'); 
+        const techJobToSave = {
+            name,
+            baitText,
+            description,
+            seniority,
+            education,
+            city,
+            budget,
+            currency,
+            company: { id: companyId }, // Set the companyId here within the company object
+        };
+
+        try {
+            await axios.post('http://localhost:8081/techJob', techJobToSave);
+            navigate('/');
+        } catch (error) {
+            console.error('Error saving tech job:', error);
+            // Handle error as needed
+        } 
     };
 
     useEffect(() => {
@@ -113,7 +130,7 @@ const AddTechJob = () => {
                             )}>
                                 <option value="EUR">Euro</option>
                                 <option value="USD">US Dollar</option>
-                                <option value="CZK">Czech Koruna</option>
+                                <option value="KČ">Czech Koruna</option>
                             </select>
                         </div>
                         <div className="mb-3">

@@ -25,7 +25,7 @@ const JobList = () => {
     {jobs.map((job) => (
       <div key={job.id} className="card border-0" style={cardStyle}>
         <div className="card-body">
-          <Link to={`/job/${job.baitText}`} className="card-link d-flex justify-content-between align-items-center">
+          <Link to={`/job/${job.id}`} className="card-link d-flex justify-content-between align-items-center">
             {job.baitText}
           </Link>
           <div className="d-flex justify-content-between align-items-center">
