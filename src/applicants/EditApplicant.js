@@ -33,7 +33,7 @@ const EditApplicant = () => {
       navigate('/applicants');
     } catch (error) {
       console.error('Error updating applicant:', error);
-      // Handle error as needed
+      
     }
   };
 
@@ -43,7 +43,7 @@ const EditApplicant = () => {
       setApplicant(result.data);
     } catch (error) {
       console.error('Error loading applicant details:', error);
-      // Handle error as needed
+      
     }
   };
 

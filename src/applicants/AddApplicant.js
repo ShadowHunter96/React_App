@@ -42,7 +42,7 @@ const AddApplicant = () => {
       navigate("/");
     } catch (error) {
       console.error("Error saving applicant:", error);
-      // Handle error as needed
+      
     }
   };
 

@@ -22,8 +22,13 @@ export default function AddUser(){
 
     const onSubmit = async(e)=>{
         e.preventDefault()
+        try{
         await axios.post("http://localhost:8081/user",user)
         navigate("/")
+        } catch (error) {
+            console.error('Error loading applicant details:', error);
+            
+          }
     }
 
     return(
