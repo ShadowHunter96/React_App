@@ -13,6 +13,8 @@ import AddApplicant from './applicants/AddApplicant.js';
 import ApplicantList from './applicants/ApplicantList.js';
 import ViewApplicant from './applicants/ViewApplicant.js';
 import EditApplicant from './applicants/EditApplicant.js';
+import SuccessPage from './components/SuccessPage.js';
+import ApplyTechJob from './jobs/ApplyTechJob.js';
 
 
 
@@ -32,6 +34,8 @@ function App() {
         <Route exact path="/applicant-list" element={<ApplicantList/>}></Route>
         <Route exact path="/viewapplicant/:id" element={<ViewApplicant/>}></Route>
         <Route exact path="/editapplicant/:id" element={<EditApplicant/>}></Route>
+        <Route exact path="/applytechjob/:jobId" element={<ApplyTechJob/>}></Route>
+        <Route exact path="/successpage" element={<SuccessPage/>}></Route>
       </Routes>
 
 

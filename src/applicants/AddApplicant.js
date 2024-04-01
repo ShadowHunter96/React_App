@@ -23,7 +23,7 @@ const AddApplicant = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    if (!name || !surname || !email || !phoneNumber || !selfDescription || !linkedInUrl) {
+    if (!name || !surname || !email || !phoneNumber || !selfDescription) {
       alert("Please fill in all fields.");
       return;
     }
