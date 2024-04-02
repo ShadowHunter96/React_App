@@ -29,6 +29,7 @@ const ApplyToTechJob = () => {
     useEffect(() => {
         const fetchTechJob = async () => {
             console.log(jobId)
+            
             try {
                 const response = await axios.get(`http://localhost:8081/techJob/${numberId}`);
                 setTechJob(response.data);
@@ -66,16 +67,27 @@ const ApplyToTechJob = () => {
             // Uložení nového aplikanta
             const response = await axios.post("http://localhost:8081/applicant/save", applicantToSave);
             // Zde předpokládám, že response z backendu vrací ID nově vytvořeného aplikanta
-            const applicantId = response.data.id;
+            setTimeout(3000)
+            const response2 = await axios.get(`http://localhost:8081/applicant/search/by-email?email=${applicant.email}`);
+            console.log(response2)
+            const applicantId = response2.data; // Zde přistupujeme k tělu odpovědi
+            
+            
             console.log(response);
+            console.log(`Applicant ID: ${applicantId}, TechJob ID: ${jobId}`);
 
+            
             // Propojení aplikanta s pracovní pozicí, pokud uložení bylo úspěšné
             if (applicantId) {
-                console.log(applicantId)
-                await axios.post(`http://localhost:8081/applicant/${applicantId}/apply/${jobId}`);
-                // Navigace po úspěšné aplikaci nebo další akce
-                navigate("/successpage"); // Případná cesta pro navigaci po úspěchu
-            }
+                try {
+                  await axios.post(`http://localhost:8081/applicant/${applicantId}/apply/${jobId}`);
+                  if (response.status === 201) { // Toto je potřeba přesunout
+                    navigate("/successpage");
+                  }
+                } catch (error) {
+                  console.error("Error:", error);
+                }
+              }
             if (response.status === 201) { // příklad pro stavový kód 201 Created
                 navigate("/successpage");
             }
