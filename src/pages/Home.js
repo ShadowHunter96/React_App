@@ -6,6 +6,7 @@ import FilterComponent from "../components/FilterComponent";
 import JobList from "../jobs/JobList";
 import UsersGrid from "../users/UsersGrid";
 import LinksGrid from "../link/LinksGrid";
+import LinkPreview from "../link/LinkPreview";
 
 export default function Home() {
   
@@ -18,6 +19,7 @@ export default function Home() {
         <JobList/>
         <UsersGrid/>
         <LinksGrid/>
+        <LinkPreview/>
       </div>
     </div>
   )
