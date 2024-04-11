@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-export default function EditTechJob() {
+export default function EditTechJobEmployer() {
   let navigate = useNavigate();
   const { id } = useParams();
 
@@ -267,12 +267,7 @@ export default function EditTechJob() {
             <button type="submit" className="btn btn-outline-primary">
               Submit
             </button>
-            <button onClick={onApprove} type="button" className="btn btn-success mx-2">
-              Approve
-            </button>
-            <button type="button" className="btn btn-danger mx-2" onClick={handleDecline}>
-              Decline
-            </button>
+          
             <Link to="/" className="btn btn-outline-danger mx-2">
               Cancel
             </Link>

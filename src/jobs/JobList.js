@@ -11,7 +11,7 @@ const JobList = () => {
 
   const loadJobs = async () => {
     try{
-    const result = await axios.get("http://localhost:8081/techJobs")
+    const result = await axios.get("http://localhost:8081/approved")
     setJobs(result.data)
     } catch (error) {
       console.error('Error loading applicant details:', error);

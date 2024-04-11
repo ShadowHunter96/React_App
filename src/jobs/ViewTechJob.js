@@ -36,7 +36,7 @@ export default function ViewTechJob() {
 
                     <div className="card">
                         <div className="card-header">
-                            Details of Tech Job id: {techJob.id}
+                            {/* Details of Tech Job id: {techJob.id} */}
                             <ul className="list-group list-group-flush">
                                 <li className="list-group-item">
                                     <b>Name: </b>

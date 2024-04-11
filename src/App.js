@@ -15,7 +15,10 @@ import ViewApplicant from './applicants/ViewApplicant.js';
 import EditApplicant from './applicants/EditApplicant.js';
 import SuccessPage from './components/SuccessPage.js';
 import ApplyTechJob from './jobs/ApplyTechJob.js';
-
+import JobListAdmin from './jobs/JobListAdmin.js';
+import EditTechJob from './jobs/EditTechJob.js';
+import EditTechJobEmployer from './jobs/EditTechJobEmployer.js';
+import AddLink from './link/AddLink.js';
 
 
 function App() {
@@ -29,6 +32,7 @@ function App() {
         <Route exact path="/edituser/:id" element={<EditUser/>}></Route>
         <Route exact path="/viewuser/:id" element={<ViewUser/>}></Route>
         <Route exact path="/addtechjob" element={<AddTechJob/>}></Route>
+        <Route exact path="/edittechjob/:id" element={<EditTechJob/>}></Route>
         <Route exact path="/job/:id" element={<ViewTechJob/>}></Route>
         <Route exact path="/addapplicant" element={<AddApplicant/>}></Route>
         <Route exact path="/applicant-list" element={<ApplicantList/>}></Route>
@@ -36,6 +40,11 @@ function App() {
         <Route exact path="/editapplicant/:id" element={<EditApplicant/>}></Route>
         <Route exact path="/applytechjob/:jobId" element={<ApplyTechJob/>}></Route>
         <Route exact path="/successpage" element={<SuccessPage/>}></Route>
+        <Route exact path="/joblistadmin" element={<JobListAdmin/>}></Route>
+        <Route exact path="/edittechjobemployer/:id" element={<EditTechJobEmployer/>}></Route>
+        <Route exact path="/addlink/:id" element={<AddLink/>}></Route>
+        <Route exact path="/addlink" element={<AddLink/>}></Route>
+
       </Routes>
 
 

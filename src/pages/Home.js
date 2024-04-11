@@ -5,6 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import FilterComponent from "../components/FilterComponent";
 import JobList from "../jobs/JobList";
 import UsersGrid from "../users/UsersGrid";
+import LinksGrid from "../link/LinksGrid";
 
 export default function Home() {
   
@@ -16,6 +17,7 @@ export default function Home() {
         <FilterComponent/>
         <JobList/>
         <UsersGrid/>
+        <LinksGrid/>
       </div>
     </div>
   )
