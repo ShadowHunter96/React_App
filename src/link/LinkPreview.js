@@ -3,13 +3,17 @@ import axios from 'axios';
 import { Container, Row, Col, Card, Placeholder } from 'react-bootstrap';
 import 'react-quill/dist/quill.snow.css';
 import ReactQuill from 'react-quill';
-
+import './LinkPreview.css';
 
 const LinkPreview = () => {
     const [links, setLinks] = useState([]);
     const [isLoading, setLoading] = useState(true);
+    const [isFirefox, setIsFirefox] = useState(false);
+    const [isChrome, setIsChrome] = useState(false);
 
     useEffect(() => {
+        setIsFirefox(/firefox/i.test(navigator.userAgent));
+        setIsChrome(/chrome|chromium|crios/i.test(navigator.userAgent) && !/edg/i.test(navigator.userAgent));
         const fetchLinks = async () => {
             try {
                 const response = await axios.get('http://localhost:8081/links-api/links');
@@ -21,7 +25,6 @@ const LinkPreview = () => {
                 setLoading(false);
             }
         };
-
         fetchLinks();
     }, []);
 
@@ -33,38 +36,61 @@ const LinkPreview = () => {
         return <p>No links available.</p>;
     }
 
+    const handleCardClick = (link) => {
+        const absoluteUrl = makeAbsoluteUrl(link.url);
+        if (link.openInNewWindow) {
+            window.open(absoluteUrl, '_blank', 'noopener,noreferrer');
+        } else {
+            window.location.href = absoluteUrl;
+        }
+    };
+
+    const makeAbsoluteUrl = (url) => {
+        if (!url.match(/^[a-zA-Z]+:\/\//)) {
+            return `http://${url}`;
+        }
+        return url;
+    };
+
+    const visibleLinks = links.filter(link =>
+        link.active &&
+        ((isChrome && link.availableInChrome) || (isFirefox && link.availableInFirefox))
+    );
     return (
         <Container>
             <Row>
-                {links
-                    .filter(link => link.availableInFirefox || link.availableInChrome || link.isActive)
-                    .map((link, index) => (
-                        <Col sm={4} key={index}>
-                            <Card className="mb-4 shadow-sm">
+                {isLoading ? (
+                    <Placeholder as="p" animation="glow">Loading...</Placeholder>
+                ) : visibleLinks.length > 0 ? (
+                    visibleLinks.map((link, index) => (
+                        <Col sm={4} key={index} >
+                            <Card className="mb-4 shadow-sm clickable-card" onClick={() => handleCardClick(link)}>
                                 {link.imageBase64 ? (
-                                    // Používáme imageBase64 pro zdroj obrázku
                                     <Card.Img variant="top" src={`data:image/png;base64,${link.imageBase64}`} />
                                 ) : (
                                     <Placeholder as={Card.Img} animation="glow" />
                                 )}
-                                
-                                <Card.Body>
-                                </Card.Body>
                                 <Card.Body>
                                     <Card.Title>{link.name}</Card.Title>
-                                    <ReactQuill value={link.description}
-                                        readOnly={false}
+                                    <ReactQuill value={link.description || ''}
+                                        readOnly={true}
                                         theme={"bubble"}
                                         modules={{ toolbar: false }} />
-                                    <Card.Link href={link.url} target={link.openInNewWindow ? '_blank' : '_self'}>
-                                        Go to Link
-                                    </Card.Link>
+                                    {link.url && (
+                                        <Card.Link href="#" onClick={(e) => {
+                                            e.preventDefault();
+                                            handleCardClick(link);
+                                        }}>
+                                            Go to Link
+                                        </Card.Link>
+                                    )}
                                 </Card.Body>
-
                             </Card>
                         </Col>
-                    ))}
-
+                    ))
+                ) : (
+                    <p>No links available.</p>
+                )}
             </Row>
         </Container>
     );

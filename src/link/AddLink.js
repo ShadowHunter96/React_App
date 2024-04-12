@@ -5,7 +5,7 @@ import { confirm } from './Confirmation';
 
 const AddLink = () => {
     let navigate = useNavigate();
-    let { id } = useParams(); 
+    let { id } = useParams();
 
     const [link, setLink] = useState({
         name: '',
@@ -13,11 +13,10 @@ const AddLink = () => {
         description: '',
         availableInFirefox: false,
         availableInChrome: false,
-        active: true,
+        isActive: true,
         openInNewWindow: false
     });
 
-    // State pro soubor obrázku
     const [file, setFile] = useState(null);
 
     const onInputChange = (e) => {
@@ -42,10 +41,11 @@ const AddLink = () => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
+        console.log(link)
 
         if (!link.name || !link.url || !link.description) {
-          alert("Please fill in all mandatory fields.");
-          return;
+            alert("Please fill in all mandatory fields.");
+            return;
         }
 
         const formData = new FormData();
@@ -55,30 +55,30 @@ const AddLink = () => {
         }
 
         try {
-          if (id) {
-            await axios.put(`http://localhost:8081/links-api/update/${id}`, formData, {
-                headers: { 'Content-Type': 'multipart/form-data' },
-            });
-          } else {
-            await axios.post('http://localhost:8081/links-api/save', formData, {
-                headers: { 'Content-Type': 'multipart/form-data' },
-            });
-          }
-          navigate('/'); 
+            if (id) {
+                await axios.put(`http://localhost:8081/links-api/update/${id}`, formData, {
+                    headers: { 'Content-Type': 'multipart/form-data' },
+                });
+            } else {
+                await axios.post('http://localhost:8081/links-api/save', formData, {
+                    headers: { 'Content-Type': 'multipart/form-data' },
+                });
+            }
+            navigate('/');
         } catch (error) {
-          console.error('Error saving link:', error);
-        } 
+            console.error('Error saving link:', error);
+        }
     };
 
     const deleteLink = async () => {
         confirm('Are you sure you want to delete this link?', 'Yes', 'No')
-          .then(async (result) => {
-            if (result) {
-              await axios.delete(`http://localhost:8081/links-api/delete/${id}`);
-              navigate('/');
-            }
-          });
-      };
+            .then(async (result) => {
+                if (result) {
+                    await axios.delete(`http://localhost:8081/links-api/delete/${id}`);
+                    navigate('/');
+                }
+            });
+    };
 
     return (
         <div className="container">
@@ -107,28 +107,37 @@ const AddLink = () => {
                             <label className="form-check-label" htmlFor="availableInChrome">Available in Chrome</label>
                         </div>
                         <div className="mb-3 form-check">
-                            <input type="checkbox" className="form-check-input" name="active" checked={link.active} onChange={onInputChange} />
+                            <input type="checkbox" className="form-check-input" name="isActive" checked={link.isActive} onChange={onInputChange} />
                             <label className="form-check-label" htmlFor="active">Is Active</label>
                         </div>
                         <div className="mb-3 form-check">
                             <input type="checkbox" className="form-check-input" name="openInNewWindow" checked={link.openInNewWindow} onChange={onInputChange} />
                             <label className="form-check-label" htmlFor="openInNewWindow">Open in New Window</label>
                         </div>
+                        <div className="mb-3">
+                            <label htmlFor="image" className="form-label">Image</label>
+                            <input
+                                type="file"
+                                className="form-control"
+                                name="image"
+                                onChange={onFileChange}
+                            />
+                        </div>
+
                         <button type="submit" className="btn btn-outline-primary">
-                          Submit
-                      </button>
-                      {id && ( // Zde je podmínka pro zobrazení tlačítka Delete
-                    <button className="btn btn-danger mx-2" onClick={() => deleteLink(link.id)}>Delete</button>
-                )}
-                      <Link to="/" className="btn btn-outline-danger mx-2">
-                          Cancel
-                      </Link>
-                  </form>
-              </div>
-          </div>
-      </div>
-  );
-  
+                            Submit
+                        </button>
+                        {id && (
+                            <button className="btn btn-danger mx-2" onClick={() => deleteLink(link.id)}>Delete</button>
+                        )}
+                        <Link to="/" className="btn btn-outline-danger mx-2">
+                            Cancel
+                        </Link>
+                    </form>
+                </div>
+            </div>
+        </div>
+    );
 };
 
 export default AddLink;

@@ -10,14 +10,19 @@ const JobList = () => {
   };
 
   const loadJobs = async () => {
-    try{
-    const result = await axios.get("http://localhost:8081/approved")
-    setJobs(result.data)
+    try {
+      const result = await axios.get("http://localhost:8081/approved");
+      if (Array.isArray(result.data)) {
+        setJobs(result.data);
+      } else {
+        // handle the case where result.data is not an array
+        console.error('Data received is not an array:', result.data);
+        setJobs([]); // reset jobs to an empty array or handle accordingly
+      }
     } catch (error) {
-      console.error('Error loading applicant details:', error);
-      
+      console.error('Error loading job details:', error);
     }
-  }
+  };
 
   useEffect(() => {
     loadJobs();
